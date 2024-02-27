@@ -115,4 +115,4 @@ public class Stackfunctions<G> {
             }
         }
     }
-}
+}//3:43
