@@ -7,14 +7,12 @@ public class Stackfunctions<G> {
 
     private List<G> stack = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
-
-    // Function 1: Push Element onto Stack
+    
     public void pushElement(G element) {
         stack.add(element);
         System.out.println("Element " + element + " pushed onto the stack.");
     }
 
-    // Function 2: Pop Element from Stack
     public void popElement() {
         if (isEmpty()) {
             System.out.println("Stack is empty. Cannot pop.");
@@ -24,7 +22,6 @@ public class Stackfunctions<G> {
         }
     }
 
-    // Function 3: Display Stack Elements
     public void displayStack() {
         if (isEmpty()) {
             System.out.println("Stack is empty.");
@@ -33,60 +30,65 @@ public class Stackfunctions<G> {
         }
     }
 
-    // Function 4: Check if Stack is Empty
     public boolean isEmpty() {
         return stack.isEmpty();
     }
 
-    // Function 5: Clear Stack
     public void clearStack() {
         stack.clear();
         System.out.println("Stack cleared.");
     }
 
-    // Function 6: Find Minimum Element in Stack
-    public void findMinElement() {
+    public void findElement(String search) {
         if (isEmpty()) {
-            System.out.println("Stack is empty. No minimum element.");
+            System.out.println("Stack is empty.");
         } else {
-            // Assuming the elements in the stack are comparable
-            G minElement = stack.get(0);
-            for (G element : stack) {
-                if (((Comparable<G>) element).compareTo(minElement) < 0) {
-                    minElement = element;
+            boolean found = false;
+            for(G element : stack)
+            {
+            	if(element instanceof Movie && ((Movie) element).getTitle().equalsIgnoreCase(search))
+            	{
+            		System.out.println("Movie found: " + element);
+            		found = true;
+            		break;
+            	}
+            }
+            if (!found) {
+            	System.out.println("Movie not found.");
+            }
                 }
             }
-            System.out.println("Minimum element in the stack: " + minElement);
-        }
-    }
+      
 
-    // Function 7: Exit Program
     public void exitProgram() {
         System.out.println("Exiting program. Goodbye!");
         System.exit(0);
     }
 
     public static void main(String[] args) {
-        Stackfunctions<Integer> stack = new Stackfunctions<>();
+        Stackfunctions<Movie> stack = new Stackfunctions<>();
 
         while (true) {
-            System.out.println("\nChoose an operation:");
-            System.out.println("1. Push Element onto Stack");
-            System.out.println("2. Pop Element from Stack");
-            System.out.println("3. Display Stack Elements");
+        	System.out.println("\nChoose an operation:");
+            System.out.println("1. Push Movie onto Stack");
+            System.out.println("2. Pop Movie from Stack");
+            System.out.println("3. Display Stack Movies");
             System.out.println("4. Check if Stack is Empty");
             System.out.println("5. Clear Stack");
-            System.out.println("6. Find Minimum Element in Stack");
+            System.out.println("6. Search Movie in Stack");
             System.out.println("7. Exit");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter the element to push onto the stack:");
-                    int element = scanner.nextInt();
-                    stack.pushElement(element);
+                	System.out.println("Enter the movie title:");
+                    String title = scanner.nextLine();
+                    System.out.println("Enter the movie score:");
+                    int score = scanner.nextInt();
+                    Movie movie = new Movie(title, score);
+                    stack.pushElement(movie);
                     break;
                 case 2:
                     stack.popElement();
@@ -101,7 +103,9 @@ public class Stackfunctions<G> {
                     stack.clearStack();
                     break;
                 case 6:
-                    stack.findMinElement();
+                    System.out.println("Enter the movie title:");
+                    String search = scanner.nextLine();
+                    stack.findElement(search);
                     break;
                 case 7:
                     stack.exitProgram();
